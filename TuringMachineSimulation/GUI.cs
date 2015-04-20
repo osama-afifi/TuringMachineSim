@@ -18,6 +18,7 @@ namespace TuringMachineSimulation
         Pen myPen;
         Graphics g;
         List<Point> statePosition;
+        enum orientation{North, South, East, West};
         public GUI()
         {
             InitializeComponent();
@@ -31,7 +32,7 @@ namespace TuringMachineSimulation
             statePosition.Add(new Point(630, 283));
             statePosition.Add(new Point(309, 332));
             statePosition.Add(new Point(626, 435));
-            statePosition.Add(new Point(94 , 336));
+            statePosition.Add(new Point(94, 336));
             statePosition.Add(new Point(800, 114));
             statePosition.Add(new Point(793, 435));
         }
@@ -42,7 +43,7 @@ namespace TuringMachineSimulation
             TapeTextBox.SelectionStart = TM.tape.getCurrentPosition();
             TapeTextBox.SelectionLength = 1;
             TapeTextBox.SelectionColor = Color.Red;
-            TapeTextBox.SelectionBackColor = Color.Yellow;        
+            TapeTextBox.SelectionBackColor = Color.Yellow;
         }
 
 
@@ -50,7 +51,7 @@ namespace TuringMachineSimulation
         {
             myPen = new Pen(Color.FromArgb(0, 0, 0));
             g = GraphicalTMPanel.CreateGraphics();
-        
+
 
             myPen.Width = 3F;
             //drawing the states
@@ -92,16 +93,12 @@ namespace TuringMachineSimulation
                     drawTransition(i, TM.states[i].transition[' '].Item3.id, ' ', TM.states[i].transition[' '].Item1);
                 }
             }
-            
-            //drawTransition(0, 1, 'x', 'y');
+
         }
 
         void drawTransition(int fromState, int toState, char readChar, char writtenChar)
         {
-            if (fromState == toState)
-                return;
             Pen curPen = new Pen(Color.FromArgb(0, 0, 0), 10F);
-            //curPen.StartCap = LineCap.RoundAnchor;
             curPen.EndCap = LineCap.ArrowAnchor;
             Point startLocation = statePosition[fromState];
             Point endLocation = statePosition[toState];
@@ -112,8 +109,56 @@ namespace TuringMachineSimulation
             startLocation.Y += (int)(25 * (Math.Sin(dy / dist)));
             endLocation.X += (int)(25 * (Math.Sin(-dx / dist)));
             endLocation.Y += (int)(25 * (Math.Sin(-dy / dist)));
-            //endLocation.X -= 25;
-            g.DrawLine(curPen, startLocation, endLocation);
+            if (fromState != toState)
+            {
+                g.DrawLine(curPen, startLocation, endLocation);
+            }
+            else if (fromState != 3)
+            {
+                if (readChar == '0')
+                {
+                    drawSelfLoop(fromState, orientation.North);
+                }
+                else
+                {
+                    drawSelfLoop(fromState, orientation.South);
+                }
+            }
+            else
+            {
+                drawSelfLoop(fromState, orientation.East);
+            }
+        }
+
+        private void drawSelfLoop(int state, orientation or)
+        {
+            Pen pen = new Pen(Color.Black, 7F);
+            pen.EndCap = LineCap.ArrowAnchor;
+            Point location = statePosition[state];
+            switch (or)
+            { 
+                case orientation.North:
+                    location.X -= 15;
+                    location.Y -= 40;
+                    g.DrawArc(pen, location.X, location.Y, 40F, 40F, 180F, 200F);
+                    break;
+
+                case orientation.South:
+                    location.X -= 15;
+                    //location.Y += 10;
+                    g.DrawArc(pen, location.X, location.Y, 40F, 40F, 180F, -200F);
+                    break;
+
+                case orientation.East:
+                    //location.X += 15;
+                    location.Y -= 20;
+                    g.DrawArc(pen, location.X, location.Y, 40F, 40F, 260F, 200F);
+                    break;
+                    
+                case orientation.West:
+                    break;
+            }
+        
         }
 
         private void GraphicalTMPanel_Clicked(object sender, MouseEventArgs e)
