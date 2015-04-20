@@ -9,6 +9,7 @@ namespace TuringMachineSimulation
     class TuringMachine
     {
         public Tape tape;
+
         public TuringMachine()
         {
             tape = new Tape();
