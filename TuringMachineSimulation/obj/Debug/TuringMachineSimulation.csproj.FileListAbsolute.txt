@@ -1,0 +1,1 @@
+D:\Osama\Programming\Projects\TuringMachineSimulation\TuringMachineSimulation\bin\Debug\TuringMachineSimulation.exe.config
