@@ -1,1 +1,9 @@
 D:\Osama\Programming\Projects\TuringMachineSimulation\TuringMachineSimulation\bin\Debug\TuringMachineSimulation.exe.config
+D:\Osama\Programming\Projects\TuringMachineSimulation\TuringMachineSimulation\bin\Debug\TuringMachineSimulation.exe
+D:\Osama\Programming\Projects\TuringMachineSimulation\TuringMachineSimulation\bin\Debug\TuringMachineSimulation.pdb
+D:\Osama\Programming\Projects\TuringMachineSimulation\TuringMachineSimulation\obj\Debug\TuringMachineSimulation.csprojResolveAssemblyReference.cache
+D:\Osama\Programming\Projects\TuringMachineSimulation\TuringMachineSimulation\obj\Debug\TuringMachineSimulation.GUI.resources
+D:\Osama\Programming\Projects\TuringMachineSimulation\TuringMachineSimulation\obj\Debug\TuringMachineSimulation.Properties.Resources.resources
+D:\Osama\Programming\Projects\TuringMachineSimulation\TuringMachineSimulation\obj\Debug\TuringMachineSimulation.csproj.GenerateResource.Cache
+D:\Osama\Programming\Projects\TuringMachineSimulation\TuringMachineSimulation\obj\Debug\TuringMachineSimulation.exe
+D:\Osama\Programming\Projects\TuringMachineSimulation\TuringMachineSimulation\obj\Debug\TuringMachineSimulation.pdb
