@@ -56,17 +56,20 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 524);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(66, 13);
+            this.label1.Size = new System.Drawing.Size(68, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Infinite Tape";
             // 
             // GraphicalTMPanel
             // 
+            this.GraphicalTMPanel.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.GraphicalTMPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.GraphicalTMPanel.Location = new System.Drawing.Point(197, 12);
             this.GraphicalTMPanel.Name = "GraphicalTMPanel";
             this.GraphicalTMPanel.Size = new System.Drawing.Size(862, 513);
             this.GraphicalTMPanel.TabIndex = 3;
+            this.GraphicalTMPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.GraphicalTMPanel_Paint);
+            this.GraphicalTMPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GraphicalTMPanel_Clicked);
             // 
             // textBox1
             // 
@@ -80,7 +83,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 41);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(61, 13);
+            this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 5;
             this.label2.Text = "Input String";
             // 
