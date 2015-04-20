@@ -8,11 +8,11 @@ namespace TuringMachineSimulation
 {
     class Tape
     {
-        const int tapeLimit = 1000;
-        const int tapeStart = 500;
+        const int tapeLimit = 150;
+        const int tapeStart = tapeLimit/3;
         int cur_pos;
         char[] _tape = new char[tapeLimit];
-        Tape()
+        public Tape()
         {
             for (int i = 0; i < tapeLimit; i++)
                 _tape[i] = '$';
@@ -38,5 +38,11 @@ namespace TuringMachineSimulation
         {
             cur_pos++;
         }
+
+        public void replaceCell(char newChar)
+        {
+            _tape[cur_pos] = newChar; 
+        }
+     
     }
 }
