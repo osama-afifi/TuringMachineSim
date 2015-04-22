@@ -82,7 +82,7 @@ namespace TuringMachineSimulation
             for (int i = 0; i < statePosition.Count; i++)
             {
                 Label lbl = new Label();
-                lbl.Size = new Size(28, 20);
+                lbl.Size = new Size(25, 15);
                 lbl.Text = "Q" + i.ToString();
                 Point lblPosition = statePosition[i];
                 lblPosition.X -= 10;
@@ -150,17 +150,19 @@ namespace TuringMachineSimulation
             endLocation.X += (int)(25 * (Math.Sin(-dx / dist)));
             endLocation.Y += (int)(25 * (Math.Sin(-dy / dist)));
             g.DrawLine(curPen, startLocation, endLocation);
-           
-            
-           
         }
 
-        private void drawState(int stateIndex, Pen pen)
+        private void drawState(int stateID, Pen pen)
         {
-            Point drawPosition = statePosition[stateIndex];
+            Point drawPosition = statePosition[stateID];
             drawPosition.X -= 25;
             drawPosition.Y -= 25;           
             g.DrawEllipse(pen, new Rectangle(drawPosition, new Size(50, 50)));
+            //double line for final states
+            drawPosition.X += 5;
+            drawPosition.Y += 5;
+            if(stateID >= 6)
+                g.DrawEllipse(pen, new Rectangle(drawPosition, new Size(40, 40)));
         }
 
         private void drawSelfLoop(int state, orientation or, Pen pen)
@@ -219,11 +221,13 @@ namespace TuringMachineSimulation
 
             if (validText)
             {
+                TM.tape = new Tape();
                 TM.tape.setTapeState(inputTextBox.Text);
                 refreshTape();
                 allStates = TM.runTuringMachine(inputTextBox.Text);
                 currentStateIndex = 0;
                 curStateId = prevStateId = allStates[0].id;
+                GraphicalTMPanel.Refresh();
             }
         }
 
@@ -233,7 +237,7 @@ namespace TuringMachineSimulation
             if(currentStateIndex < allStates.Count - 1)
             {
                 Tuple<char, State.dir, State> currentTransition = allStates[currentStateIndex].transition[TapeTextBox.Text[TM.tape.getCurrentPosition()] == '$' ? ' ' : TapeTextBox.Text[TM.tape.getCurrentPosition()]];
-                TM.tape.replaceCell(currentTransition.Item1);
+                TM.tape.replaceCell(currentTransition.Item1 == ' '? '$' : currentTransition.Item1);
                 if (currentTransition.Item2 == State.dir.L)
                     TM.tape.goLeft();
                 else if (currentTransition.Item2 == State.dir.R)
