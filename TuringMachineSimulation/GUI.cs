@@ -15,9 +15,13 @@ namespace TuringMachineSimulation
     public partial class GUI : Form
     {
         TuringMachine TM;
-        Pen myPen;
+        Pen blackPen, redPen, orangePen;
+        int curStateId = -1, prevStateId = -1;
         Graphics g;
         List<Point> statePosition;
+        int currentStateIndex;
+        //all the states of the current run (until the input text is accepted or rejected)
+        List<State> allStates;
         enum orientation{North, South, East, West};
         public GUI()
         {
@@ -49,11 +53,16 @@ namespace TuringMachineSimulation
 
         private void GraphicalTMPanel_Paint(object sender, PaintEventArgs e)
         {
-            myPen = new Pen(Color.FromArgb(0, 0, 0));
+            blackPen = new Pen(Color.FromArgb(0, 0, 0));
+            redPen = new Pen(Color.Red);
+            orangePen = new Pen(Color.Orange);
             g = GraphicalTMPanel.CreateGraphics();
 
 
-            myPen.Width = 3F;
+            blackPen.Width = 3F;
+            redPen.Width = 5F;
+            orangePen.Width = 5F;
+
             //drawing the states
             Point drawPosition;
             for (int i = 0; i < statePosition.Count; i++)
@@ -61,7 +70,12 @@ namespace TuringMachineSimulation
                 drawPosition = statePosition[i];
                 drawPosition.X -= 25;
                 drawPosition.Y -= 25;
-                g.DrawEllipse(myPen, new Rectangle(drawPosition, new Size(50, 50)));
+                if (i == curStateId)
+                    drawState(i, redPen);
+                else if (i == prevStateId)
+                    drawState(i, orangePen);
+                else
+                    drawState(i, blackPen);
             }
 
             //drawing the labels of the nodes
@@ -78,25 +92,51 @@ namespace TuringMachineSimulation
             }
 
             //drawing the transitions
+            int from, to;
             for (int i = 0; i < TM.states.Count; i++)
             {
+                from = i;
                 if (TM.states[i].transition.ContainsKey('0'))
                 {
-                    drawTransition(i, TM.states[i].transition['0'].Item3.id, '0', TM.states[i].transition['0'].Item1);
+                    to = TM.states[i].transition['0'].Item3.id;
+                    if (from == to)
+                    {
+                        drawSelfLoop(from, from == 3 ? orientation.East: orientation.North, blackPen);
+                    }
+                    else
+                    {
+                        drawTransition(from, to, blackPen);
+                    }
                 }
                 if (TM.states[i].transition.ContainsKey('1'))
                 {
-                    drawTransition(i, TM.states[i].transition['1'].Item3.id, '1', TM.states[i].transition['1'].Item1);
+                    to = TM.states[i].transition['1'].Item3.id;
+                    if (from == to)
+                    {
+                        drawSelfLoop(from, from == 3 ? orientation.East : orientation.South, blackPen);
+                    }
+                    else
+                    {
+                        drawTransition(from, to, blackPen);
+                    }
                 }
                 if (TM.states[i].transition.ContainsKey(' '))
                 {
-                    drawTransition(i, TM.states[i].transition[' '].Item3.id, ' ', TM.states[i].transition[' '].Item1);
+                    to = TM.states[i].transition[' '].Item3.id;
+                    if (from == to)
+                    {
+                        drawSelfLoop(from, orientation.East, blackPen);
+                    }
+                    else
+                    {
+                        drawTransition(from, to, blackPen);
+                    }
                 }
             }
 
         }
 
-        void drawTransition(int fromState, int toState, char readChar, char writtenChar)
+        void drawTransition(int fromState, int toState, Pen pen)
         {
             Pen curPen = new Pen(Color.FromArgb(0, 0, 0), 10F);
             curPen.EndCap = LineCap.ArrowAnchor;
@@ -109,30 +149,23 @@ namespace TuringMachineSimulation
             startLocation.Y += (int)(25 * (Math.Sin(dy / dist)));
             endLocation.X += (int)(25 * (Math.Sin(-dx / dist)));
             endLocation.Y += (int)(25 * (Math.Sin(-dy / dist)));
-            if (fromState != toState)
-            {
-                g.DrawLine(curPen, startLocation, endLocation);
-            }
-            else if (fromState != 3)
-            {
-                if (readChar == '0')
-                {
-                    drawSelfLoop(fromState, orientation.North);
-                }
-                else
-                {
-                    drawSelfLoop(fromState, orientation.South);
-                }
-            }
-            else
-            {
-                drawSelfLoop(fromState, orientation.East);
-            }
+            g.DrawLine(curPen, startLocation, endLocation);
+           
+            
+           
         }
 
-        private void drawSelfLoop(int state, orientation or)
+        private void drawState(int stateIndex, Pen pen)
         {
-            Pen pen = new Pen(Color.Black, 7F);
+            Point drawPosition = statePosition[stateIndex];
+            drawPosition.X -= 25;
+            drawPosition.Y -= 25;           
+            g.DrawEllipse(pen, new Rectangle(drawPosition, new Size(50, 50)));
+        }
+
+        private void drawSelfLoop(int state, orientation or, Pen pen)
+        {
+            pen.Width = 7F; 
             pen.EndCap = LineCap.ArrowAnchor;
             Point location = statePosition[state];
             switch (or)
@@ -167,6 +200,68 @@ namespace TuringMachineSimulation
             //yLabel.Text = e.Y.ToString();
             //SolidBrush b = new SolidBrush(Color.FromArgb(0, 0, 0));
             //g.FillEllipse(b, e.X, e.Y, 20F, 20F);
+        }
+
+        private void SubmitButton_Click(object sender, EventArgs e)
+        {
+            //validating that the input is 0 and 1 only
+            bool validText = true;
+            for (int i = 0; i < inputTextBox.Text.Length; i++)
+            {
+                if (inputTextBox.Text[i] != '0' && inputTextBox.Text[i] != '1')
+                {
+                    MessageBox.Show("Input word may contain 0 and 1 only !!!");
+                    validText = false;
+                    inputTextBox.Text = "";
+                    break;
+                }
+            }
+
+            if (validText)
+            {
+                TM.tape.setTapeState(inputTextBox.Text);
+                refreshTape();
+                allStates = TM.runTuringMachine(inputTextBox.Text);
+                currentStateIndex = 0;
+                curStateId = prevStateId = allStates[0].id;
+            }
+        }
+
+        private void NextStepButton_Click(object sender, EventArgs e)
+        {
+            //currentStateIndex++;
+            if(currentStateIndex < allStates.Count - 1)
+            {
+                Tuple<char, State.dir, State> currentTransition = allStates[currentStateIndex].transition[TapeTextBox.Text[TM.tape.getCurrentPosition()] == '$' ? ' ' : TapeTextBox.Text[TM.tape.getCurrentPosition()]];
+                TM.tape.replaceCell(currentTransition.Item1);
+                if (currentTransition.Item2 == State.dir.L)
+                    TM.tape.goLeft();
+                else if (currentTransition.Item2 == State.dir.R)
+                    TM.tape.goRight();
+                refreshTape();
+                drawState(prevStateId, blackPen);
+                prevStateId = curStateId;
+                curStateId = allStates[currentStateIndex + 1].id;
+                drawState(prevStateId, orangePen);
+                drawState(curStateId, redPen);
+                currentStateIndex++;
+                if (currentStateIndex == allStates.Count - 1)
+                {
+                    if (allStates[currentStateIndex].isFinal)
+                    {
+                        resultTextBox.ForeColor = Color.GreenYellow;
+                        resultTextBox.BackColor = Color.Green;
+                        resultTextBox.Text = "Accepted";
+                    }
+                    else
+                    {
+                        resultTextBox.ForeColor = Color.Pink;
+                        resultTextBox.BackColor = Color.Red;
+                        resultTextBox.Text = "Rejected";
+                    }
+                }
+            }
+            
         }
 
 

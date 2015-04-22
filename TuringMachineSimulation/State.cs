@@ -11,9 +11,11 @@ namespace TuringMachineSimulation
         public enum dir { L, R, S };
         public int id;
         public Dictionary<char, Tuple<char, dir, State>> transition;
-        public State(int id)
+        public bool isFinal;
+        public State(int id, bool isFinal)
         {
             this.id = id;
+            this.isFinal = isFinal;
             transition = new Dictionary<char, Tuple<char, dir, State>>();
         }
 

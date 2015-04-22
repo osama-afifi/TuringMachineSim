@@ -19,7 +19,7 @@ namespace TuringMachineSimulation
             {
                 states.Add(new State(i, i >= 6));
             }
-            
+
             states[0].addTransition('0', ' ', State.dir.R, states[1]);
             states[0].addTransition('1', ' ', State.dir.R, states[4]);
             states[0].addTransition(' ', ' ', State.dir.S, states[6]);
@@ -38,28 +38,43 @@ namespace TuringMachineSimulation
             states[5].addTransition('1', ' ', State.dir.L, states[3]);
         }
 
-        List<State> runTuringMachine(string text)
+        public List<State> runTuringMachine(string text)
         {
+            string newText;
             curState = states[0];
-            State nextState
-            int i = 0;
+            State nextState;
+            int i = 1;
             List<State> ret;
             ret = new List<State>();
+            text = text.Insert(0, " ");
+            text = text + " ";
             while (!curState.isFinal)
             {
                 ret.Add(curState);
-                nextState = curState.transition[text[i]].Item3;
-                text = text.Substring(0, i - 1) + curState.transition[text[i]].Item1 + text.Substring(i + 1);
-                if (curState.transition[text[i]].Item2 == State.dir.L)
+                if (curState.transition.ContainsKey(text[i]))
                 {
-                    i--;
-                }
-                else if (curState.transition[text[i]].Item2 == State.dir.R)
+                    nextState = curState.transition[text[i]].Item3;
+                    newText = text.Substring(0, i) + curState.transition[text[i]].Item1 + text.Substring(i + 1);
+                    if (curState.transition[text[i]].Item2 == State.dir.L)
+                    {
+                        i--;
+                    }
+                    else if (curState.transition[text[i]].Item2 == State.dir.R)
+                    {
+                        i++;
+                    }
+                    text = newText;
+                    curState = nextState;
+                 }
+                else
                 {
-                    i++;
+                    break;
                 }
-                curState = nextState;
             }
+            if(curState.isFinal)
+                ret.Add(curState);
+            return ret;
         }
     }
 }
+

@@ -24,6 +24,12 @@ namespace TuringMachineSimulation
             return new string(_tape);        
         }
 
+        public void setTapeState(string inputText)
+        {
+            for (int i = tapeStart; i < tapeStart + inputText.Length; i++)
+                _tape[i] = inputText[i - tapeStart];
+        }
+
         public int getCurrentPosition()
         {
             return cur_pos;
