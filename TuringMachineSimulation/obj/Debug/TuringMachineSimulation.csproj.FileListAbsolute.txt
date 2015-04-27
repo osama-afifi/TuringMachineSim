@@ -7,3 +7,12 @@ D:\Osama\Programming\Projects\TuringMachineSimulation\TuringMachineSimulation\ob
 D:\Osama\Programming\Projects\TuringMachineSimulation\TuringMachineSimulation\obj\Debug\TuringMachineSimulation.csproj.GenerateResource.Cache
 D:\Osama\Programming\Projects\TuringMachineSimulation\TuringMachineSimulation\obj\Debug\TuringMachineSimulation.exe
 D:\Osama\Programming\Projects\TuringMachineSimulation\TuringMachineSimulation\obj\Debug\TuringMachineSimulation.pdb
+D:\FCIS\4th year\Second Term\Theory of Computation\Task\Turing Machine Simulator\TuringMachineSim\TuringMachineSim\TuringMachineSimulation\bin\Debug\TuringMachineSimulation.exe.config
+D:\FCIS\4th year\Second Term\Theory of Computation\Task\Turing Machine Simulator\TuringMachineSim\TuringMachineSim\TuringMachineSimulation\obj\Debug\TuringMachineSimulation.exe
+D:\FCIS\4th year\Second Term\Theory of Computation\Task\Turing Machine Simulator\TuringMachineSim\TuringMachineSim\TuringMachineSimulation\obj\Debug\TuringMachineSimulation.pdb
+D:\FCIS\4th year\Second Term\Theory of Computation\Task\Turing Machine Simulator\TuringMachineSim\TuringMachineSim\TuringMachineSimulation\bin\Debug\TuringMachineSimulation.exe
+D:\FCIS\4th year\Second Term\Theory of Computation\Task\Turing Machine Simulator\TuringMachineSim\TuringMachineSim\TuringMachineSimulation\bin\Debug\TuringMachineSimulation.pdb
+D:\FCIS\4th year\Second Term\Theory of Computation\Task\Turing Machine Simulator\TuringMachineSim\TuringMachineSim\TuringMachineSimulation\obj\Debug\TuringMachineSimulation.csprojResolveAssemblyReference.cache
+D:\FCIS\4th year\Second Term\Theory of Computation\Task\Turing Machine Simulator\TuringMachineSim\TuringMachineSim\TuringMachineSimulation\obj\Debug\TuringMachineSimulation.GUI.resources
+D:\FCIS\4th year\Second Term\Theory of Computation\Task\Turing Machine Simulator\TuringMachineSim\TuringMachineSim\TuringMachineSimulation\obj\Debug\TuringMachineSimulation.Properties.Resources.resources
+D:\FCIS\4th year\Second Term\Theory of Computation\Task\Turing Machine Simulator\TuringMachineSim\TuringMachineSim\TuringMachineSimulation\obj\Debug\TuringMachineSimulation.csproj.GenerateResource.Cache

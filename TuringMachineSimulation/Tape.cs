@@ -9,7 +9,7 @@ namespace TuringMachineSimulation
     class Tape
     {
         const int tapeLimit = 150;
-        const int tapeStart = tapeLimit/3;
+        const int tapeStart = tapeLimit/6;
         int cur_pos;
         char[] _tape = new char[tapeLimit];
         public Tape()
@@ -22,6 +22,12 @@ namespace TuringMachineSimulation
         public string getTapeState()
         {
             return new string(_tape);        
+        }
+
+        public void setTapeState(string inputText)
+        {
+            for (int i = tapeStart; i < tapeStart + inputText.Length; i++)
+                _tape[i] = inputText[i - tapeStart];
         }
 
         public int getCurrentPosition()
