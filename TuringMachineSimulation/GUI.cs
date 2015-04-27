@@ -19,6 +19,8 @@ namespace TuringMachineSimulation
         int curStateId = -1, prevStateId = -1;
         Graphics g;
         List<Point> statePosition;
+        List<Point> transitionLabelsPositions;
+        List<string> transitionLabelsText;
         int currentStateIndex;
         //all the states of the current run (until the input text is accepted or rejected)
         List<State> allStates;
@@ -28,8 +30,15 @@ namespace TuringMachineSimulation
             InitializeComponent();
             TM = new TuringMachine();
             refreshTape();
-            statePosition = new List<Point>(9);
             //saving the nodes locations
+            initStatePositions();
+            initTransitionLabelsPositions();
+            initTranisitionsText();
+        }
+
+        private void initStatePositions()
+        {
+            statePosition = new List<Point>(9);
             statePosition.Add(new Point(150, 106));
             statePosition.Add(new Point(392, 106));
             statePosition.Add(new Point(610, 106));
@@ -39,6 +48,48 @@ namespace TuringMachineSimulation
             statePosition.Add(new Point(94, 336));
             statePosition.Add(new Point(800, 114));
             statePosition.Add(new Point(793, 435));
+        }
+
+        private void initTransitionLabelsPositions()
+        {
+            transitionLabelsPositions = new List<Point>(16);
+            transitionLabelsPositions.Add(new Point(256, 86));
+            transitionLabelsPositions.Add(new Point(385, 45));
+            transitionLabelsPositions.Add(new Point(380, 155));
+            transitionLabelsPositions.Add(new Point(497, 86));
+            transitionLabelsPositions.Add(new Point(642, 189));
+            transitionLabelsPositions.Add(new Point(706, 88));
+            transitionLabelsPositions.Add(new Point(700, 265));
+            transitionLabelsPositions.Add(new Point(700, 290));
+            transitionLabelsPositions.Add(new Point(373, 220));
+            transitionLabelsPositions.Add(new Point(242, 200));
+            transitionLabelsPositions.Add(new Point(303, 272));
+            transitionLabelsPositions.Add(new Point(299, 384));
+            transitionLabelsPositions.Add(new Point(421, 400));
+            transitionLabelsPositions.Add(new Point(650, 364));
+            transitionLabelsPositions.Add(new Point(672, 405));
+            transitionLabelsPositions.Add(new Point(60, 180));
+        }
+
+        private void initTranisitionsText()
+        {
+            transitionLabelsText = new List<string>(16);
+            transitionLabelsText.Add("0/$ , R");
+            transitionLabelsText.Add("0/0 , R");
+            transitionLabelsText.Add("1/1 , R");
+            transitionLabelsText.Add("$/$ , L");
+            transitionLabelsText.Add("0/$ , L");
+            transitionLabelsText.Add("$/$ , S");
+            transitionLabelsText.Add("1/1 , L");
+            transitionLabelsText.Add("0/0 , L");
+            transitionLabelsText.Add("$/$ , R");
+            transitionLabelsText.Add("1/$ , R");
+            transitionLabelsText.Add("0/0 , R");
+            transitionLabelsText.Add("1/1 , R");
+            transitionLabelsText.Add("$/$ , R");
+            transitionLabelsText.Add("1/$ , L");
+            transitionLabelsText.Add("$/$ , S");
+            transitionLabelsText.Add("$/$ , S");
         }
 
         public void refreshTape()
@@ -134,6 +185,62 @@ namespace TuringMachineSimulation
                 }
             }
 
+            //drawing the text above each transition
+            for (int i = 0; i < transitionLabelsPositions.Count; i++)
+            {
+                drawText(transitionLabelsPositions[i], transitionLabelsText[i]);
+            }
+            //drawText(new Point(256, 86), "0/$ , R");
+            //drawText(new Point(385, 45), "0/0 , R");
+            //drawText(new Point(380, 155), "1/1 , R");
+            //drawText(new Point(497, 86), "$/$ , L");
+            //drawText(new Point(642, 189), "0/$ , L");
+            //drawText(new Point(706, 88), "$/$ , S");
+            //drawText(new Point(700, 265), "1/1 , L");
+            //drawText(new Point(700, 290), "0/0 , L");
+            //drawText(new Point(373, 220), "$/$ , R");
+            //drawText(new Point(242, 200), "1/$ , R");
+            //drawText(new Point(303, 272), "0/0 , R");
+            //drawText(new Point(299, 384), "1/1 , R");
+            //drawText(new Point(421, 400), "$/$ , R");
+            //drawText(new Point(650, 364), "1/$ , L");
+            //drawText(new Point(672, 405), "$/$ , S");
+            //drawText(new Point(60, 180), "$/$ , S");
+            /*
+             * 0 1  256 86
+1 1 385, 45
+1 1 396, 161
+1 2 497, 86
+2 3 642, 189
+2 7 706, 88
+3 3 700, 265
+3 3 700, 296 
+0 4 260, 227
+4 4 303, 272
+4 4 299, 384
+4 5 421, 392
+5 3 650, 364
+5 8 672, 405
+0 9 27 ,194
+             */
+
+
+
+
+        }
+
+        void drawText(Point position, string text)
+        {
+            Label label = new Label();
+            label.Size = new Size(70, 20);
+            Point lblPosition = position;
+            Font font = new Font("Comic Sans MS Bold", 13);
+            label.Text = text;
+            lblPosition.X -= 10;
+            lblPosition.Y -= 5;
+            label.Location = lblPosition;
+            label.Font = font;
+            GraphicalTMPanel.Controls.Add(label);
         }
 
         void drawTransition(int fromState, int toState, Pen pen)
@@ -159,10 +266,13 @@ namespace TuringMachineSimulation
             drawPosition.Y -= 25;           
             g.DrawEllipse(pen, new Rectangle(drawPosition, new Size(50, 50)));
             //double line for final states
-            drawPosition.X += 5;
-            drawPosition.Y += 5;
-            if(stateID >= 6)
+            if (stateID >= 6)
+            {
+                drawPosition.X += 5;
+                drawPosition.Y += 5;
+                pen = new Pen(pen.Color, 3);
                 g.DrawEllipse(pen, new Rectangle(drawPosition, new Size(40, 40)));
+            }
         }
 
         private void drawSelfLoop(int state, orientation or, Pen pen)
@@ -266,6 +376,17 @@ namespace TuringMachineSimulation
                 }
             }
             
+        }
+
+        private void CompleteButton_Click(object sender, EventArgs e)
+        {
+            while (currentStateIndex < allStates.Count - 1)
+            {
+                NextStepButton_Click(sender, e);
+                GraphicalTMPanel.Refresh();
+                TapeTextBox.Refresh();
+                System.Threading.Thread.Sleep(1000);
+            }
         }
 
 

@@ -96,6 +96,7 @@
             this.CompleteButton.TabIndex = 6;
             this.CompleteButton.Text = "Complete Simulation";
             this.CompleteButton.UseVisualStyleBackColor = true;
+            this.CompleteButton.Click += new System.EventHandler(this.CompleteButton_Click);
             // 
             // SubmitButton
             // 
