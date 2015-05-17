@@ -33,12 +33,13 @@
             this.GraphicalTMPanel = new System.Windows.Forms.Panel();
             this.inputTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.CompleteButton = new System.Windows.Forms.Button();
+            this.fastRunButton = new System.Windows.Forms.Button();
             this.SubmitButton = new System.Windows.Forms.Button();
             this.SimulationLabel = new System.Windows.Forms.Label();
             this.NextStepButton = new System.Windows.Forms.Button();
             this.resultTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.goToFinalButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // TapeTextBox
@@ -57,7 +58,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 524);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(66, 13);
+            this.label1.Size = new System.Drawing.Size(68, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Infinite Tape";
             // 
@@ -84,19 +85,19 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 41);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(61, 13);
+            this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 5;
             this.label2.Text = "Input String";
             // 
-            // CompleteButton
+            // fastRunButton
             // 
-            this.CompleteButton.Location = new System.Drawing.Point(29, 245);
-            this.CompleteButton.Name = "CompleteButton";
-            this.CompleteButton.Size = new System.Drawing.Size(117, 43);
-            this.CompleteButton.TabIndex = 6;
-            this.CompleteButton.Text = "Complete Simulation";
-            this.CompleteButton.UseVisualStyleBackColor = true;
-            this.CompleteButton.Click += new System.EventHandler(this.CompleteButton_Click);
+            this.fastRunButton.Location = new System.Drawing.Point(32, 261);
+            this.fastRunButton.Name = "fastRunButton";
+            this.fastRunButton.Size = new System.Drawing.Size(117, 43);
+            this.fastRunButton.TabIndex = 6;
+            this.fastRunButton.Text = "Fast Run";
+            this.fastRunButton.UseVisualStyleBackColor = true;
+            this.fastRunButton.Click += new System.EventHandler(this.CompleteButton_Click);
             // 
             // SubmitButton
             // 
@@ -120,9 +121,9 @@
             // 
             // NextStepButton
             // 
-            this.NextStepButton.Location = new System.Drawing.Point(53, 311);
+            this.NextStepButton.Location = new System.Drawing.Point(43, 216);
             this.NextStepButton.Name = "NextStepButton";
-            this.NextStepButton.Size = new System.Drawing.Size(75, 23);
+            this.NextStepButton.Size = new System.Drawing.Size(94, 23);
             this.NextStepButton.TabIndex = 10;
             this.NextStepButton.Text = "Next Step";
             this.NextStepButton.UseVisualStyleBackColor = true;
@@ -146,17 +147,28 @@
             this.label3.TabIndex = 12;
             this.label3.Text = "Simulation Result";
             // 
+            // goToFinalButton
+            // 
+            this.goToFinalButton.Location = new System.Drawing.Point(55, 326);
+            this.goToFinalButton.Name = "goToFinalButton";
+            this.goToFinalButton.Size = new System.Drawing.Size(82, 39);
+            this.goToFinalButton.TabIndex = 13;
+            this.goToFinalButton.Text = "Go To Final";
+            this.goToFinalButton.UseVisualStyleBackColor = true;
+            this.goToFinalButton.Click += new System.EventHandler(this.goToFinalButton_Click);
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1074, 590);
+            this.Controls.Add(this.goToFinalButton);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.resultTextBox);
             this.Controls.Add(this.NextStepButton);
             this.Controls.Add(this.SimulationLabel);
             this.Controls.Add(this.SubmitButton);
-            this.Controls.Add(this.CompleteButton);
+            this.Controls.Add(this.fastRunButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.inputTextBox);
             this.Controls.Add(this.GraphicalTMPanel);
@@ -176,12 +188,13 @@
         private System.Windows.Forms.Panel GraphicalTMPanel;
         private System.Windows.Forms.TextBox inputTextBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button CompleteButton;
+        private System.Windows.Forms.Button fastRunButton;
         private System.Windows.Forms.Button SubmitButton;
         private System.Windows.Forms.Label SimulationLabel;
         private System.Windows.Forms.Button NextStepButton;
         private System.Windows.Forms.TextBox resultTextBox;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button goToFinalButton;
 
 
     }

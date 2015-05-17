@@ -316,6 +316,8 @@ namespace TuringMachineSimulation
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
+            resultTextBox.Clear();
+            resultTextBox.BackColor = Color.LightGray;
             //validating that the input is 0 and 1 only
             bool validText = true;
             for (int i = 0; i < inputTextBox.Text.Length; i++)
@@ -387,6 +389,16 @@ namespace TuringMachineSimulation
                 TapeTextBox.Refresh();
                 System.Threading.Thread.Sleep(1000);
             }
+        }
+
+        private void goToFinalButton_Click(object sender, EventArgs e)
+        {
+            while (currentStateIndex < allStates.Count - 1)
+            {
+                NextStepButton_Click(sender, e);
+            }
+            GraphicalTMPanel.Refresh();
+            TapeTextBox.Refresh();           
         }
 
 
